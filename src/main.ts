@@ -21,6 +21,8 @@ dotenv.config();
     app.disable('x-powered-by');
   };
 
+  initializeMiddleware();
+
   app.use('/api/v1/users', userRoute);
 
   const initializeErrorHandling = (): void => {
@@ -42,7 +44,6 @@ dotenv.config();
     });
   };
 
-  initializeMiddleware();
   initializeErrorHandling();
 
   async function start () {

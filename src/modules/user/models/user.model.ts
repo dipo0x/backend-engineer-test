@@ -19,7 +19,7 @@ const userSchema = new Schema<IUserDocument>(
 			type: String,
 			required: true,
             default: '',
-		},			
+		},
 	},
 	{
 		timestamps: true,

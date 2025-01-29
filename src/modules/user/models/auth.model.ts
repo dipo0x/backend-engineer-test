@@ -5,7 +5,7 @@ const authSchema = new Schema<IAuth>(
 	{
 		user: {
 			type: Schema.Types.ObjectId,
-			ref: 'Auth',
+			ref: 'User',
             required: false
 		},	
 		password: {
