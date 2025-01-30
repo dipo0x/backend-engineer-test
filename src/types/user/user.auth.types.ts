@@ -1,7 +1,7 @@
 import { Document, Types } from 'mongoose';
 
 interface IAuth extends Document {
-	_id: string;
+	_id: Types.ObjectId;
 	user: Types.ObjectId;
 	password: string;
 	createdAt: Date;

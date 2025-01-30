@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken';
+import { Types } from 'mongoose';
 
 type SignTokenDetails = (user: {
-    _id: string;
+    _id: Types.ObjectId;
 }) => string;
 
 const signToken: SignTokenDetails = (user) => {

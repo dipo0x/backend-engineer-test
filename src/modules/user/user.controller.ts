@@ -7,7 +7,7 @@ import mongoose from "mongoose";
 import catchAsync from "../../utils/catchAysnc.util";
 import jwtUtil from "../../utils/jwt.util";
 
-export const registerUserHandler = catchAsync(async (
+export const registerUser = catchAsync(async (
   req: Request< {}, {},
   {
     username: string;
@@ -61,7 +61,7 @@ export const registerUserHandler = catchAsync(async (
   }
 });
 
-export const loginUserHandler = catchAsync(async (req: Request< {}, {}, {
+export const loginUser = catchAsync(async (req: Request< {}, {}, {
   email: string;
   password: string;
 }>, res: Response, next: NextFunction) => {

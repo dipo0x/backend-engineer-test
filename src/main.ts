@@ -7,6 +7,7 @@ import connectToDatabase from './config/database.config';
 import logger from './utils/logger.util';
 import dotenv from 'dotenv';
 import userRoute from './modules/user/user.route'
+import productRoute from './modules/product/product.route'
 dotenv.config();
 
   const app: Application = express();
@@ -19,11 +20,9 @@ dotenv.config();
     app.use(express.urlencoded({ extended: false }));
     app.use(compression());
     app.disable('x-powered-by');
+    app.use('/api/v1/users', userRoute);
+    app.use('/api/v1/product', productRoute);
   };
-
-  initializeMiddleware();
-
-  app.use('/api/v1/users', userRoute);
 
   const initializeErrorHandling = (): void => {
     app.use((err: any, req: Request, res: Response, next: NextFunction) => {
@@ -44,6 +43,8 @@ dotenv.config();
     });
   };
 
+
+  initializeMiddleware();
   initializeErrorHandling();
 
   async function start () {
