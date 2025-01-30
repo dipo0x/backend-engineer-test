@@ -37,7 +37,7 @@ export const createProduct = catchAsync(async (
       console.error(err);
       return ApiError(500, "Something went wrong", res);
     }
-  });
+});
 
   export const getAllProductsGroupedByStore = catchAsync(async (
     req: Request,
@@ -146,5 +146,57 @@ export const deleteProduct
   } catch (error) {
       console.error(error);
       return ApiError(500, "Something went wrong", res);
+  }
+});
+
+export const editProduct = catchAsync(async (
+  req: Request<{ id: string }, {}, Partial<IProduct>>,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+
+    
+    const { id } = req.params;
+    const updateData = req.body;
+
+    if (!id) return ApiError(400, "Product ID is required", res);
+    
+    const product = await Product.findById(id);
+    if (!product) return ApiError(404, "Product not found", res);
+    
+    if (product.createdBy.toString() !== req.user?._id.toString()) {
+      return ApiError(403, "You are not authorized to edit this product", res);
+    }
+    
+
+    if (updateData.name && !updateData.name.trim()) {
+      return ApiError(400, "Product name cannot be empty", res);
+    }
+    if (updateData.price !== undefined && updateData.price <= 0) {
+      return ApiError(400, "Price must be greater than 0", res);
+    }
+    if (updateData.quantity !== undefined && updateData.quantity < 0) {
+      return ApiError(400, "Quantity cannot be negative", res);
+    }
+    
+    if (updateData.name) {
+      const existingProduct = await Product.exists({ name: updateData.name, _id: { $ne: id } });
+      if (existingProduct) {
+        return ApiError(400, "Product with this name already exists", res);
+      }
+    }
+    
+    const updatedProduct = await Product.findByIdAndUpdate(id, updateData, { new: true, runValidators: true });
+    
+    return res.status(200).send({
+      status: 200,
+      success: true,
+      message: "Product successfully updated",
+      data: updatedProduct,
+    });
+  } catch (err) {
+    console.error(err);
+    return ApiError(500, "Something went wrong", res);
   }
 });

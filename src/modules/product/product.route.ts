@@ -27,6 +27,9 @@ router.delete("/delete/:id",
     authMiddleware.authenticateRequest,
     productController.deleteProduct);
     
-// router.patch("/edit", productController.editProduct);
+router.patch("/edit/:id",
+    authMiddleware.authenticateRequest,
+    productController.editProduct
+);
 
 export default router;
