@@ -18,9 +18,15 @@ router.get("/store-products",
     productController.getAllProductsInStore
 );
 
-// router.get("/products/:id", productController.getProductById);
+router.get("/product/:id",
+    authMiddleware.authenticateRequest,
+    productController.getProductById
+);
 
-// router.delete("/delete/:id", productController.deleteProduct);
+router.delete("/delete/:id",
+    authMiddleware.authenticateRequest,
+    productController.deleteProduct);
+    
 // router.patch("/edit", productController.editProduct);
 
 export default router;

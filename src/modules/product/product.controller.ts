@@ -98,3 +98,53 @@ export const getAllProductsInStore = catchAsync(async (
       return ApiError(500, "Something went wrong", res);
   }
 });
+
+export const getProductById = catchAsync(async (
+  req: Request,
+  res: Response
+) => {
+  try {
+      const { id } = req.params
+      const product = await Product.findById(id);
+      if(!product){
+        return ApiError(404, "Product not found", res);
+      }
+      return res.status(200).json({
+          status: 200,
+          success: true,
+          data: product
+      });
+  } catch (error) {
+      console.error(error);
+      return ApiError(500, "Something went wrong", res);
+  }
+});
+
+export const deleteProduct
+ = catchAsync(async (
+  req: Request,
+  res: Response
+) => {
+  try {
+      const { id } = req.params
+    
+      const product = await Product.findOne({
+        _id: id,
+        createdBy: req.user?._id
+      });
+
+      if(!product){
+        return ApiError(404, "You are not authorized to delete this product", res);
+      }
+      await product.deleteOne()
+
+      return res.status(200).json({
+          status: 200,
+          success: true,
+          message: "Product deleted successfully"
+      });
+  } catch (error) {
+      console.error(error);
+      return ApiError(500, "Something went wrong", res);
+  }
+});
