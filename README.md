@@ -11,7 +11,7 @@ Clone the repository to your local machine.
 git clone https://github.com/dipo0x/backend-engineer-test
 ```
 Ensure that you have Typescript and MongoDB installed on your machine. You could also use MongoDB Atlas.
-Navigate to the root directory of the project in a terminal.
+Navigate to the directory where you cloned the project in a terminal.
 
 ```bash
 cd backend-engineer-test
