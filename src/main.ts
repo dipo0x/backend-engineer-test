@@ -55,3 +55,5 @@ dotenv.config();
   };
 
 start()
+
+export default app;
